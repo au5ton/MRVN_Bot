@@ -1,0 +1,1 @@
+export { comeHere } from './comeHere'

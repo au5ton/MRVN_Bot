@@ -1,10 +1,12 @@
 import 'dotenv/config'
 import * as mineflayer from 'mineflayer'
-import { pathfinder, Movements, goals } from 'mineflayer-pathfinder'
-const { GoalNear } = goals
-import minecraftData from 'minecraft-data'
+import { pathfinder } from 'mineflayer-pathfinder'
 import autoEat from 'mineflayer-auto-eat'
 import armorManager from 'mineflayer-armor-manager'
+
+import { CommandProcessor } from './commands/CommandProcessor'
+import { comeHere } from './commands'
+import { curiousEyes } from './plugins'
 
 console.log('Bot starting')
 
@@ -16,9 +18,12 @@ const bot = mineflayer.createBot({
   auth: 'microsoft'
 })
 
+// 3rd party plugins
 bot.loadPlugin(pathfinder)
 bot.loadPlugin(autoEat)
 bot.loadPlugin(armorManager)
+// custom plugins
+bot.loadPlugin(curiousEyes)
 
 // bot.on('chat', (username, message) => {
 //   if (username === bot.username) return
@@ -26,23 +31,15 @@ bot.loadPlugin(armorManager)
 // })
 
 bot.once('spawn', () => {
-  const mcData = minecraftData(bot.version)
-  const defaultMove = new Movements(bot, mcData as any)
+  const commandProcessor = new CommandProcessor();
+  commandProcessor.registerCommand({
+    name: 'come here',
+    run: comeHere
+  })
 
   bot.on('whisper', (username, message) => {
     if (username === bot.username) return
-    if (message !== 'come here') return
-    //bot.whisper(username, message)
-    const target = bot.players[username]?.entity
-    if (!target) {
-      bot.whisper(username, 'I dont see you!')
-      return
-    }
-    const { x: playerX, y: playerY, z: playerZ } = target.position
-
-    bot.pathfinder.setMovements(defaultMove)
-    const RANGE_GOAL = 1 // get within this radius of the player
-    bot.pathfinder.setGoal(new GoalNear(playerX, playerY, playerZ, RANGE_GOAL))
+    commandProcessor.processCommand(bot, username, message);
   })
 })
 
