@@ -25,7 +25,9 @@
     "mineflayer": "^4.3.0",
     "mineflayer-armor-manager": "^1.4.2",
     "mineflayer-auto-eat": "^2.3.3",
+    "mineflayer-bloodhound": "^0.0.2",
     "mineflayer-pathfinder": "^2.0.0",
+    "mineflayer-pvp": "^1.2.1",
     "typescript": "^4.6.3",
     "vec3": "^0.1.7"
   }

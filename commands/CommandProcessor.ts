@@ -4,11 +4,11 @@ export type CommandHandler = (bot: mineflayer.Bot, username: string, message: st
 
 export class CommandProcessor {
   private commands: {[key: string]: CommandHandler};
-  private commandRunning: boolean;
+  private runningCommand: Promise<any> | null;
   
   constructor() {
     this.commands = {};
-    this.commandRunning = false;
+    this.runningCommand = null;
   }
 
   registerCommand(options: {
@@ -21,13 +21,13 @@ export class CommandProcessor {
   async processCommand(bot: mineflayer.Bot, username: string, message: string) {
     for(let key in this.commands) {
       if(message.toLowerCase().startsWith(key)) {
-        if(this.commandRunning) {
+        if(this.runningCommand !== null) {
           bot.whisper(username, `Sorry, I'm busy right now.`);
         }
         else {
-          this.commandRunning = true;
-          await this.commands[key](bot, username, message);
-          this.commandRunning = false;
+          this.runningCommand = this.commands[key](bot, username, message);
+          await this.runningCommand;
+          this.runningCommand = null;
         }
       }
     }
