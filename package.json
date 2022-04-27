@@ -1,0 +1,24 @@
+{
+  "name": "mrvn_bot",
+  "version": "1.0.0",
+  "description": "MRVN_Bot is a Minecraft bot using mineflayer",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node bot.js",
+    "build": "tsc bot.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/au5ton/MRVN_Bot.git"
+  },
+  "keywords": [],
+  "author": "Austin Jackson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/au5ton/MRVN_Bot/issues"
+  },
+  "homepage": "https://github.com/au5ton/MRVN_Bot#readme",
+  "dependencies": {
+    "typescript": "^4.6.3"
+  }
+}
