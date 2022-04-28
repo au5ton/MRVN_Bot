@@ -1,3 +1,6 @@
 export { comeHere } from './comeHere'
 export { goTo } from './goTo'
 export { whereAreYou } from './whereAreYou'
+export { depositChest } from './depositChest'
+export { withdrawChest } from './withdrawChest'
+//export { safeDistance } from './safeDistance'

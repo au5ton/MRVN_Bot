@@ -7,7 +7,7 @@ import { plugin as pvp } from 'mineflayer-pvp'
 const bloodhound = require('mineflayer-bloodhound')
 
 import { CommandProcessor } from './commands/CommandProcessor'
-import { comeHere, goTo, whereAreYou } from './commands'
+import { comeHere, depositChest, goTo, whereAreYou, withdrawChest } from './commands'
 import { curiousEyes, selfDefense } from './plugins'
 import { Entity, Item } from 'minecraft-data'
 
@@ -49,6 +49,14 @@ bot.once('spawn', () => {
   commandProcessor.registerCommand({
     name: 'where are you',
     run: whereAreYou
+  })
+  commandProcessor.registerCommand({
+    name: 'deposit chest',
+    run: depositChest
+  })
+  commandProcessor.registerCommand({
+    name: 'withdraw chest',
+    run: withdrawChest
   })
 
   bot.on('whisper', (username, message) => {
