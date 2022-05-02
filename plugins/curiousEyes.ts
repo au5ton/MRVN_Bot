@@ -7,7 +7,7 @@ import { MineflayerPlugin } from './index'
 
 declare module "mineflayer" {
   interface Bot {
-      cache_curiousEyes_busy: boolean
+    cache_curiousEyes_busy: boolean
   }
 }
 
@@ -29,7 +29,7 @@ export const curiousEyes: MineflayerPlugin = (bot) => {
       //bot.entity.position.distanceTo
       const nearestEntity = bot.nearestEntity()
       // if nearest entity is a player, and the player is within 10 blocks away
-      if(nearestEntity && (nearestEntity.type === 'player' || nearestEntity.type === 'object') && bot.entity.position.distanceTo(nearestEntity.position) < LOOK_RADIUS) {
+      if(nearestEntity && (nearestEntity.type === 'player' || nearestEntity.type === 'object') && bot.entity.position.distanceTo(nearestEntity.position) < LOOK_RADIUS && bot.canSeeEntity(nearestEntity)) {
           const playerEyes = nearestEntity.position.offset(0, nearestEntity.height, 0)
 
           const isNotMoving = bot.entity.onGround && bot.entity.velocity.x === 0 && bot.entity.velocity.z === 0

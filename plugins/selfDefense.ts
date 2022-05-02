@@ -27,7 +27,7 @@ export const selfDefense: MineflayerPlugin = (bot) => {
     }
   }, 3000);
 
-  // make bot float
+  // make bot float in water
   bot.on('physicsTick', () => {
     if(bot.pathfinder.goal === null) {
       const block = bot.blockAt(bot.entity.position)
@@ -68,7 +68,12 @@ export const selfDefense: MineflayerPlugin = (bot) => {
     if(bot.entity.id === entity.id && hostilesNearby) {
       if(!isAttackingAlready) {
         isAttackingAlready = true
-        const nearestEnemy = bot.nearestEntity(e => e.entityType !== null && HOSTILE_MOB_IDS.includes(e.entityType!) && e.position.distanceTo(bot.entity.position) <= ATTACK_RANGE);
+        const nearestEnemy = bot.nearestEntity(e => 
+          e.entityType !== null 
+          && HOSTILE_MOB_IDS.includes(e.entityType!) 
+          && e.position.distanceTo(bot.entity.position) <= ATTACK_RANGE
+          && bot.canSeeEntity(e)
+          );
         if(nearestEnemy !== null) {
           console.log('ouch!')
           // interrupt the GPS, but only for non-PVP related things
