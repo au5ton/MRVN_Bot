@@ -10,6 +10,7 @@ import { CommandProcessor } from './commands/CommandProcessor'
 import { comeHere, depositChest, goTo, whereAreYou, withdrawChest } from './commands'
 import { curiousEyes, selfDefense } from './plugins'
 import { Entity, Item } from 'minecraft-data'
+import { safeDistance } from './commands/safeDistance'
 
 console.log('Bot starting')
 
@@ -57,6 +58,10 @@ bot.once('spawn', () => {
   commandProcessor.registerCommand({
     name: 'withdraw chest',
     run: withdrawChest
+  })
+  commandProcessor.registerCommand({
+    name: 'test',
+    run: safeDistance
   })
 
   bot.on('whisper', (username, message) => {
