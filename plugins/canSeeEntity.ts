@@ -12,7 +12,7 @@ declare module "mineflayer" {
 
 export const canSeeEntityPlugin: MineflayerPlugin = (bot) => {
   const mcData = minecraftData(bot.version)
-  const transparent_blocks = mcData.blocksArray.filter(e => e.transparent).map(e => e.id)
+  const transparent_blocks = mcData.blocksArray.filter(e => e.transparent || e.boundingBox === 'empty').map(e => e.id)
 
   bot.canSeeEntity = (entity: Entity, vectorLength: number = 5 / 16) => {
     const { height, position } = bot.entity
